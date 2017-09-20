@@ -70,7 +70,7 @@ namespace FindLargeFiles.Wpf
             try
             {
                 string fileName = ((e.Source as System.Windows.Controls.ListBox).SelectedItem as FileInfo).FullName;
-                Shell.ViewFileLocation(fileName);
+                if (fileName != null) Shell.ViewFileLocation(fileName);
             }
             catch (Exception exc)
             {
