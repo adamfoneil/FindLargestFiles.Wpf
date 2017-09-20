@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FindLargeFiles.Wpf"
+        xmlns:io="clr-namespace:System.IO;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Find Largest Files" Height="350" Width="525" PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,19 +15,21 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <Button Content="Find 10 Largest Files" x:Name="btnFindFolders" Click="btnFindFolders_Click"/>
+            <Button Content="Find 10 Largest Files" x:Name="btnFindFolders" Click="btnFindFolders_Click" Padding="5"/>
         </StackPanel>
 
-        <ListBox Grid.Row="1" x:Name="lbFiles" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Row="1" x:Name="lbFiles" HorizontalContentAlignment="Stretch" MouseDoubleClick="lbFiles_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding FullPath}"/>
+                        <TextBlock Grid.Column="0" Text="{Binding FullName}"/>
                         <TextBlock Grid.Column="1" Text="{Binding Length}"/>
+                        <TextBlock Grid.Column="2" Text="{Binding LastWriteTime}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

@@ -13,6 +13,7 @@ namespace FindLargeFiles.Library
         {
             var files = await FindFilesAsync(path, progress, cancellationToken);
 
+            progress?.Report("Finding largest files...");
             IEnumerable<FileInfo> results = null;
             await Task.Run(() =>
             {
@@ -71,6 +72,5 @@ namespace FindLargeFiles.Library
                 // do nothing, i.e. Access Denied
             }
         }
-
     }
 }
