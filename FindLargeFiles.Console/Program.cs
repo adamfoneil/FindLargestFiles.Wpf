@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindLargeFiles.Library
+namespace FindLargeFiles.Console
 {
-    public class Class1
+    class Program
     {
+        static void Main(string[] args)
+        {
+
+        }
     }
 }
