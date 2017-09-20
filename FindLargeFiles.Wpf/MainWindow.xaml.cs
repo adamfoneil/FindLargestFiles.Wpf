@@ -25,14 +25,24 @@ namespace FindLargeFiles.Wpf
 
         private async void btnFindFolders_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog dlg = new FolderBrowserDialog();
-            if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
-
-            _path = dlg.SelectedPath;
-            await FindLargesFiles(dlg.SelectedPath);
+            await PromptForFolder();
         }
 
-        private async Task FindLargesFiles(string path)
+        private async Task PromptForFolder()
+        {
+            FolderBrowserDialog dlg = new FolderBrowserDialog();            
+            if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+
+            btnFindFolders.IsEnabled = false;
+            btnFindFolders.Content = "Working, please wait...";
+            _path = dlg.SelectedPath;
+            await FindLargestFiles(dlg.SelectedPath);
+
+            btnFindFolders.Content = "Find 10 Largest Files in Folder...";
+            btnFindFolders.IsEnabled = true;
+        }
+
+        private async Task FindLargestFiles(string path)
         {
             IProgress<string> progress = new Progress<string>(ShowProgress);
 
@@ -72,8 +82,13 @@ namespace FindLargeFiles.Wpf
         {
             if (e.Key == Key.F5 && Directory.Exists(_path))
             {
-                await FindLargesFiles(_path);
+                await FindLargestFiles(_path);
             }
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            await PromptForFolder();
         }
     }
 }

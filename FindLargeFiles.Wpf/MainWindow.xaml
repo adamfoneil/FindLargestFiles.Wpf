@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FindLargeFiles.Wpf"        
         mc:Ignorable="d"
-        Title="Find Largest Files" Height="350" Width="525" PreviewKeyDown="Window_PreviewKeyDown">
+        Title="Find Largest Files" Height="350" Width="525" PreviewKeyDown="Window_PreviewKeyDown" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <Button Content="Find 10 Largest Files" x:Name="btnFindFolders" Click="btnFindFolders_Click" Padding="5"/>
+            <Button Content="Find 10 Largest Files in Folder..." x:Name="btnFindFolders" Click="btnFindFolders_Click" Padding="5"/>
         </StackPanel>
 
         <ListBox Grid.Row="1" x:Name="lbFiles" HorizontalContentAlignment="Stretch" MouseDoubleClick="lbFiles_MouseDoubleClick">
