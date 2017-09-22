@@ -51,7 +51,10 @@ namespace FindLargeFiles.Wpf
             var largest = await Search.FindLargestFilesAsync(path, progress: progress);
 
             lbFiles.Items.Clear();
-            foreach (var item in largest) lbFiles.Items.Add(item);
+            foreach (var item in largest)
+            {
+                lbFiles.Items.Add(item);
+            }
 
             _sw.Stop();
             var elapsed = _sw.Elapsed;

@@ -9,12 +9,12 @@ namespace FindLargeFiles.Library
 {
     public static class Search
     {
-        public static async Task<IEnumerable<FileInfo>> FindLargestFilesAsync(string path, int count = 10, IProgress<string> progress = null, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<IEnumerable<FileSearchResult>> FindLargestFilesAsync(string path, int count = 10, IProgress<string> progress = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var files = await FindFilesAsync(path, progress, cancellationToken);
 
             progress?.Report("Finding largest files...");
-            IEnumerable<FileInfo> results = null;
+            IEnumerable<FileSearchResult> results = null;
             await Task.Run(() =>
             {
                 results = files.OrderByDescending(item => item.Length).Take(count);
@@ -30,18 +30,18 @@ namespace FindLargeFiles.Library
             return results;
         }
 
-        public static async Task<IEnumerable<FileInfo>> FindFilesAsync(string path, IProgress<string> progress = null, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<IEnumerable<FileSearchResult>> FindFilesAsync(string path, IProgress<string> progress = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var folders = await FindDirectoriesAsync(path, progress, cancellationToken);
 
-            List<FileInfo> results = new List<FileInfo>();
+            List<FileSearchResult> results = new List<FileSearchResult>();
             await Task.Run(() =>
             {
                 foreach (string folder in folders)
                 {
                     progress?.Report($"Examining {folder}");
                     string[] files = Directory.GetFiles(folder, "*", SearchOption.TopDirectoryOnly);
-                    results.AddRange(files.Select(fileName => new FileInfo(fileName)));
+                    results.AddRange(files.Select(fileName => new FileSearchResult(fileName)));
                 }
             });
 

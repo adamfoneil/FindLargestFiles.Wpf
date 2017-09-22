@@ -22,13 +22,15 @@
                 <DataTemplate>
                     <Grid Margin="0,2">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="18"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding FullName}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Length}"/>
-                        <TextBlock Grid.Column="2" Text="{Binding LastWriteTime}"/>
+                        <Image Grid.Column="0" Source="{Binding Icon}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FullName}"/>
+                        <TextBlock Grid.Column="2" Text="{Binding Length}"/>
+                        <TextBlock Grid.Column="3" Text="{Binding DateModified}"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
