@@ -83,7 +83,7 @@ namespace FindLargeFiles.Wpf
             _sw.Stop();
             var elapsed = _sw.Elapsed;
 
-            this.Title = $"Find Larges Files - {path}";
+            this.Title = $"Find Largest Files - {path}";
             lblStatus.Content = $"Ready - {elapsed.Seconds} seconds";
         }
 
