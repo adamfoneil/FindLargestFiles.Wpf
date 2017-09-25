@@ -29,12 +29,17 @@ namespace FindLargeFiles.Library
             string ext = Path.GetExtension(fileName);
             if (!_iconSource.ContainsKey(ext))
             {
-                var icon = FileSystem.GetIcon(fileName, FileSystem.IconSize.Small);
-                
-                
-                //_iconSource.Add(ext, );
+                try
+                {
+                    //var icon = FileSystem.GetIcon(fileName, FileSystem.IconSize.Small);
+                    //_iconSource.Add(ext, );
+                    //_icon = _iconSource[ext];
+                }
+                catch
+                {
+                    // do nothing, something wrong with icon retrieval
+                }
             }
-            //_icon = _iconSource[ext];
         }
 
         public string FullName { get { return _fullName; } }
