@@ -9,6 +9,9 @@ using AdamOneilSoftware;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Windows.Media;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
 
 namespace FindLargeFiles.Wpf
 {
@@ -52,7 +55,7 @@ namespace FindLargeFiles.Wpf
 
             var largest = await Search.FindLargestFilesAsync(path, progress: progress);
 
-            Dictionary<string, ImageSource> _iconSource = new Dictionary<string, ImageSource>();
+            Dictionary<string, BitmapImage> _iconSource = new Dictionary<string, BitmapImage>();
 
             lbFiles.Items.Clear();
             foreach (var item in largest)
@@ -62,16 +65,17 @@ namespace FindLargeFiles.Wpf
                 {
                     try
                     {                        
-                        var icon = FileSystem.GetIcon(item.FullName, FileSystem.IconSize.Small);
-                        //_iconSource.Add(ext, );
-                        //_icon = _iconSource[ext];
+                        var iconBmp = FileSystem.GetIcon(item.FullName, FileSystem.IconSize.Small);
+                        BitmapImage imgSrc = ConvertToImageSource(iconBmp);
+                        _iconSource.Add(ext, imgSrc);                        
                     }
                     catch
                     {
-                        // do nothing, something wrong with icon retrieval
-                    }
+                        // do nothing
+                    }                    
                 }
 
+                if (_iconSource.ContainsKey(ext)) item.Icon = _iconSource[ext];
                 lbFiles.Items.Add(item);
             }
 
@@ -80,6 +84,23 @@ namespace FindLargeFiles.Wpf
 
             this.Title = $"Find Larges Files - {path}";
             lblStatus.Content = $"Ready - {elapsed.Seconds} seconds";
+        }
+
+        private BitmapImage ConvertToImageSource(Bitmap iconBmp)
+        {
+            // thanks to https://stackoverflow.com/a/1069509/2023653
+            using (MemoryStream ms = new MemoryStream())
+            {
+                iconBmp.Save(ms, ImageFormat.Bmp);
+                ms.Position = 0;
+                //ms.Seek(0, SeekOrigin.Begin);
+                var result = new BitmapImage();
+                result.BeginInit();                
+                result.StreamSource = ms;
+                result.CacheOption = BitmapCacheOption.OnLoad;
+                result.EndInit();
+                return result;
+            }
         }
 
         private void ShowProgress(string item)
@@ -91,7 +112,7 @@ namespace FindLargeFiles.Wpf
         {
             try
             {
-                string fileName = ((e.Source as System.Windows.Controls.ListBox).SelectedItem as FileInfo).FullName;
+                string fileName = ((e.Source as System.Windows.Controls.ListBox).SelectedItem as FileSearchResult).FullName;
                 if (fileName != null) Shell.ViewFileLocation(fileName);
             }
             catch (Exception exc)
