@@ -92,7 +92,7 @@ namespace FindLargeFiles.Wpf
             // thanks to https://stackoverflow.com/a/1069509/2023653
             using (MemoryStream ms = new MemoryStream())
             {
-                iconBmp.Save(ms, ImageFormat.Bmp);
+                iconBmp.Save(ms, ImageFormat.Png);
                 ms.Position = 0;
                 //ms.Seek(0, SeekOrigin.Begin);
                 var result = new BitmapImage();
