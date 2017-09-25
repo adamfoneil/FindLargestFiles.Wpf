@@ -1,5 +1,4 @@
-﻿using AdamOneilSoftware;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -15,9 +14,8 @@ namespace FindLargeFiles.Library
         private readonly string _fullName;
         private readonly DateTime _lastWritten;
         private readonly long _length;
-        private readonly ImageSource _icon;
 
-        private static Dictionary<string, ImageSource> _iconSource = new Dictionary<string, ImageSource>();
+        private ImageSource _icon;
 
         public FileSearchResult(string fileName)
         {
@@ -25,26 +23,11 @@ namespace FindLargeFiles.Library
             _fullName = fileName;
             _lastWritten = fi.LastWriteTime;
             _length = fi.Length;
-
-            string ext = Path.GetExtension(fileName);
-            if (!_iconSource.ContainsKey(ext))
-            {
-                try
-                {
-                    //var icon = FileSystem.GetIcon(fileName, FileSystem.IconSize.Small);
-                    //_iconSource.Add(ext, );
-                    //_icon = _iconSource[ext];
-                }
-                catch
-                {
-                    // do nothing, something wrong with icon retrieval
-                }
-            }
         }
 
         public string FullName { get { return _fullName; } }
         public DateTime DateModified { get { return _lastWritten; } }
         public long Length { get { return _length; } }
-        public ImageSource Icon { get { return _icon; } }
+        public ImageSource Icon { get { return _icon; } set { _icon = value; } }
     }
 }

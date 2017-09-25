@@ -46,10 +46,5 @@
     <Compile Include="Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AoFileSystemLib">
-      <Version>1.0.12</Version>
-    </PackageReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,7 +17,7 @@ namespace FindLargeFiles.Library
             IEnumerable<FileSearchResult> results = null;
             await Task.Run(() =>
             {
-                results = files.OrderByDescending(item => item.Length).Take(count);
+                results = files.OrderByDescending(item => item.Length).Take(count);            
             });
 
             return results;

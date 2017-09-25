@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.IO;
 using AdamOneilSoftware;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace FindLargeFiles.Wpf
 {
@@ -50,9 +52,26 @@ namespace FindLargeFiles.Wpf
 
             var largest = await Search.FindLargestFilesAsync(path, progress: progress);
 
+            Dictionary<string, ImageSource> _iconSource = new Dictionary<string, ImageSource>();
+
             lbFiles.Items.Clear();
             foreach (var item in largest)
             {
+                string ext = Path.GetExtension(item.FullName);
+                if (!_iconSource.ContainsKey(ext))
+                {
+                    try
+                    {                        
+                        var icon = FileSystem.GetIcon(item.FullName, FileSystem.IconSize.Small);
+                        //_iconSource.Add(ext, );
+                        //_icon = _iconSource[ext];
+                    }
+                    catch
+                    {
+                        // do nothing, something wrong with icon retrieval
+                    }
+                }
+
                 lbFiles.Items.Add(item);
             }
 
