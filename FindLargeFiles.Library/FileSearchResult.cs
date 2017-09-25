@@ -34,7 +34,7 @@ namespace FindLargeFiles.Library
                 
                 //_iconSource.Add(ext, );
             }
-            _icon = _iconSource[ext];
+            //_icon = _iconSource[ext];
         }
 
         public string FullName { get { return _fullName; } }
