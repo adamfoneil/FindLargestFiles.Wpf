@@ -67,7 +67,7 @@ namespace FindLargeFiles.Wpf
                     try
                     {                        
                         var iconBmp = FileSystem.GetIcon(item.FullName, FileSystem.IconSize.Small);
-                        BitmapImage imgSrc = ConvertToImageSource(iconBmp);
+                        BitmapImage imgSrc = IconToBitmapImage(iconBmp);
                         _iconSource.Add(iconKey, imgSrc);                        
                     }
                     catch
@@ -87,7 +87,7 @@ namespace FindLargeFiles.Wpf
             lblStatus.Content = $"Ready - {elapsed.Seconds} seconds";
         }
 
-        private BitmapImage ConvertToImageSource(Bitmap iconBmp)
+        private BitmapImage IconToBitmapImage(Bitmap iconBmp)
         {
             // thanks to https://stackoverflow.com/a/1069509/2023653
             using (MemoryStream ms = new MemoryStream())
