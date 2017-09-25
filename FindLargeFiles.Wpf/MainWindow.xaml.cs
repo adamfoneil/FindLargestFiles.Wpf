@@ -60,14 +60,15 @@ namespace FindLargeFiles.Wpf
             lbFiles.Items.Clear();
             foreach (var item in largest)
             {
-                string ext = Path.GetExtension(item.FullName);
-                if (!_iconSource.ContainsKey(ext))
+                string iconKey = Path.GetExtension(item.FullName);
+                if (iconKey.ToLower().Equals(".exe")) iconKey = Path.GetFileName(item.FullName);
+                if (!_iconSource.ContainsKey(iconKey))
                 {
                     try
                     {                        
                         var iconBmp = FileSystem.GetIcon(item.FullName, FileSystem.IconSize.Small);
                         BitmapImage imgSrc = ConvertToImageSource(iconBmp);
-                        _iconSource.Add(ext, imgSrc);                        
+                        _iconSource.Add(iconKey, imgSrc);                        
                     }
                     catch
                     {
@@ -75,7 +76,7 @@ namespace FindLargeFiles.Wpf
                     }                    
                 }
 
-                if (_iconSource.ContainsKey(ext)) item.Icon = _iconSource[ext];
+                if (_iconSource.ContainsKey(iconKey)) item.Icon = _iconSource[iconKey];
                 lbFiles.Items.Add(item);
             }
 
